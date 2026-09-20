@@ -1,0 +1,115 @@
+name: Release Deluxe Sync Calibre Plugin
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deluxe-sync-calibre-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read and validate plugin version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(python3 .github/scripts/sync_readme_version.py)
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Plugin version must be four numeric parts (w.x.y.z); got: $version" >&2
+            exit 1
+          fi
+          tag="v${version}"
+          if [[ "${{ github.event_name }}" == "push" && "${GITHUB_REF_NAME}" != "$tag" ]]; then
+            echo "Pushed tag must match plugin version; pushed=${GITHUB_REF_NAME} expected=${tag}" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Validate Python syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m compileall -q DeluxeSync scripts/build_plugin.py .github/scripts/sync_readme_version.py
+
+      - name: Validate translations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/i18n_audit.py
+
+      - name: Build plugin archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/build_plugin.py
+
+      - name: Validate plugin package
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.version }}"
+          archive="dist/Deluxe_Sync_v${version}.zip"
+          test -f "$archive"
+          python3 - "$archive" <<'PY'
+          import sys
+          from zipfile import ZipFile
+
+          archive = sys.argv[1]
+          required = {
+              "__init__.py",
+              "action.py",
+              "api.py",
+              "config.py",
+              "icon.png",
+              "plugin-import-name-deluxe_sync.txt",
+          }
+          with ZipFile(archive) as zf:
+              names = set(zf.namelist())
+          missing = sorted(required - names)
+          if missing:
+              raise SystemExit(f"Release archive is missing: {', '.join(missing)}")
+          print(f"Validated {archive} ({len(names)} files)")
+          PY
+
+      - name: Build release notes from changelog
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.version }}"
+          awk -v version="$version" '
+            index($0, "## [" version "]") == 1 { capture=1; next }
+            capture && /^## \[/ { exit }
+            capture { print }
+          ' CHANGELOG.md > release-notes.md
+          if [[ ! -s release-notes.md ]]; then
+            echo "No changelog section found for version $version" >&2
+            exit 1
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${{ steps.version.outputs.version }}"
+          tag="${{ steps.version.outputs.tag }}"
+          archive="dist/Deluxe_Sync_v${version}.zip"
+          gh release create "$tag" "$archive" \
+            --title "Deluxe Sync for Calibre v${version}" \
+            --notes-file release-notes.md
