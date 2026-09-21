@@ -104,6 +104,15 @@ MAPPING_SPECS += (
         _("DS Vocabulary"),
         "comments",
     ),
+    MappingSpec(
+        "review_note",
+        _("Summary / Review"),
+        _("Stores the private KOReader review note in its own column."),
+        frozenset({"comments"}),
+        "#ds_review",
+        _("DS Review"),
+        "comments",
+    ),
 )
 
 SPEC_BY_KEY = {spec.key: spec for spec in MAPPING_SPECS}

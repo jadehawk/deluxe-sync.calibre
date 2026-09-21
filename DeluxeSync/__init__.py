@@ -10,7 +10,7 @@ class DeluxeSyncPlugin(InterfaceActionBase):
     description = "Sync selected Calibre books with an enhanced KOReader Sync server."
     supported_platforms = ["windows", "osx", "linux"]
     author = "Jadehawk"
-    version = (0, 1, 0, 0)
+    version = (0, 1, 0, 1)
     version_string = ".".join(str(part) for part in version)
     minimum_calibre_version = (7, 0, 0)
 

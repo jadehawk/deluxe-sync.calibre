@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.0.1] - 2026-09-21
+
+- Added bidirectional native Calibre Rating synchronization with half-star precision through the enhanced server book-feedback API.
+- Added a dedicated **Summary / Review** custom-column mapping (`#ds_review` / **DS Review**) for private KOReader review notes without using Calibre's built-in Comments field.
+- Added explicit rating/review clear handling, Review Changes policies, and regression coverage for feedback privacy and metadata separation.
+
 ## [0.1.0.0] - 2026-09-20
 
 Deluxe Sync 0.1.0.0 is the first public Calibre companion release for Deluxe-Sync and compatible KOSync servers.

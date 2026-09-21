@@ -22,7 +22,7 @@ def build_metadata_patch(
     return {
         preview.field: preview.calibre_value
         for preview in build_metadata_preview(book, server_metadata, policies)
-        if preview.action == ACTION_CALIBRE_TO_SERVER and preview.field != "cover"
+        if preview.action == ACTION_CALIBRE_TO_SERVER and preview.field not in {"cover", "rating", "review_note"}
     }
 
 

@@ -36,7 +36,7 @@ msgid_plural " · {count} words"
 msgstr[0] ""
 msgstr[1] ""
 
-#: DeluxeSync/dialogs/sync_preview.py:427
+#: DeluxeSync/dialogs/sync_preview.py:463
 msgid "(empty)"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr ""
 msgid "<b>Candidate details</b>"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:140
+#: DeluxeSync/dialogs/columns.py:149
 msgid "<b>Column Mappings</b>"
 msgstr ""
 
@@ -100,7 +100,7 @@ msgstr ""
 msgid "Already current"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:435
+#: DeluxeSync/dialogs/sync_preview.py:471
 msgid "Already matches"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Annotations: {state}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:160 DeluxeSync/dialogs/library.py:48 DeluxeSync/dialogs/match_books.py:85 DeluxeSync/dialogs/sync_preview.py:86
+#: DeluxeSync/dialogs/library.py:160 DeluxeSync/dialogs/library.py:48 DeluxeSync/dialogs/match_books.py:85 DeluxeSync/dialogs/sync_preview.py:89
 msgid "ASIN"
 msgstr ""
 
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Author:"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:84
+#: DeluxeSync/dialogs/sync_preview.py:87
 msgid "Authors"
 msgstr ""
 
@@ -188,7 +188,7 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
-#: DeluxeSync/dialogs/match_books.py:231 DeluxeSync/dialogs/sync_books.py:197 DeluxeSync/dialogs/sync_preview.py:278
+#: DeluxeSync/dialogs/match_books.py:231 DeluxeSync/dialogs/sync_books.py:197 DeluxeSync/dialogs/sync_preview.py:302
 msgid "Back to Dashboard"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr ""
 msgid "Bound “{title}”. The binding is saved locally and will be backed up to compatible Techy-Notes servers; no book metadata or reading progress was changed."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:76
+#: DeluxeSync/dialogs/sync_preview.py:77
 msgid "Calibre"
 msgstr ""
 
@@ -256,15 +256,19 @@ msgstr ""
 msgid "Calibre client: {client}"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:851
+#: DeluxeSync/dialogs/sync_preview.py:948
 msgid "Calibre cover API is unavailable."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:859
+#: DeluxeSync/dialogs/sync_preview.py:956
 msgid "Calibre cover could not be read."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:519
+#: DeluxeSync/dialogs/sync_preview.py:937
+msgid "Calibre custom-column API is unavailable."
+msgstr ""
+
+#: DeluxeSync/dialogs/columns.py:528
 msgid "Calibre did not create {lookup}: {result}."
 msgstr ""
 
@@ -280,7 +284,11 @@ msgstr ""
 msgid "Calibre pairing: {state}"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:512
+#: DeluxeSync/dialogs/sync_preview.py:928
+msgid "Calibre rating API is unavailable."
+msgstr ""
+
+#: DeluxeSync/dialogs/columns.py:521
 msgid "Calibre requires a restart before another custom-column change. Close Preferences and restart Calibre."
 msgstr ""
 
@@ -288,15 +296,15 @@ msgstr ""
 msgid "Calibre title"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:92
+#: DeluxeSync/dialogs/sync_preview.py:95
 msgid "Calibre wins"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:437
+#: DeluxeSync/dialogs/sync_preview.py:473
 msgid "Calibre → Server"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:413
+#: DeluxeSync/dialogs/columns.py:422
 msgid "Calibre's custom-column creator is not available for this library."
 msgstr ""
 
@@ -336,7 +344,7 @@ msgstr ""
 msgid "Checking…"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:209
+#: DeluxeSync/dialogs/columns.py:218
 msgid "Choose a column for each item, or leave it Not mapped. If you create a new column, Calibre must restart before Deluxe Sync can use it."
 msgstr ""
 
@@ -352,11 +360,11 @@ msgstr ""
 msgid "Choose the area you want to configure. Connection details and column mappings are kept on separate pages so this screen stays compact."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:146
+#: DeluxeSync/dialogs/columns.py:155
 msgid "Choose which Calibre columns Deluxe Sync should use. You can select an existing column or create the recommended one."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:186
+#: DeluxeSync/dialogs/sync_preview.py:208
 msgid "Choose which side should win for each field. These choices are saved for future previews and metadata sync."
 msgstr ""
 
@@ -364,7 +372,7 @@ msgstr ""
 msgid "Clear Binding"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:217
+#: DeluxeSync/dialogs/columns.py:226
 msgid "Clear Mappings"
 msgstr ""
 
@@ -376,7 +384,7 @@ msgstr ""
 msgid "Client ID: {client_id}"
 msgstr ""
 
-#: DeluxeSync/config.py:355 DeluxeSync/dialogs/about.py:64 DeluxeSync/dialogs/dashboard.py:222 DeluxeSync/dialogs/library.py:194 DeluxeSync/dialogs/library.py:288 DeluxeSync/dialogs/match_books.py:231 DeluxeSync/dialogs/sync_books.py:197 DeluxeSync/dialogs/sync_preview.py:278
+#: DeluxeSync/config.py:355 DeluxeSync/dialogs/about.py:64 DeluxeSync/dialogs/dashboard.py:222 DeluxeSync/dialogs/library.py:194 DeluxeSync/dialogs/library.py:288 DeluxeSync/dialogs/match_books.py:231 DeluxeSync/dialogs/sync_books.py:197 DeluxeSync/dialogs/sync_preview.py:302
 msgid "Close"
 msgstr ""
 
@@ -384,12 +392,12 @@ msgstr ""
 msgid "Column Mappings"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:164
-msgid "Compare Calibre metadata and covers with the server for the currently selected linked books. Text metadata shown as Calibre → Server can be written to the server; Server → Calibre text metadata remains preview-only. Covers can sync in either direction. If the preferred side is empty while the other side has a value, Deluxe Sync keeps the existing value instead of erasing it. Sync does not change reading progress."
+#: DeluxeSync/dialogs/sync_preview.py:186
+msgid "Compare Calibre metadata, covers, ratings, and mapped reviews with the server for the currently selected linked books. Text metadata shown as Calibre → Server can be written to the server; Server → Calibre text metadata remains preview-only. Covers, ratings, and the mapped Summary / Review column can sync in either direction when supported. If the preferred metadata side is empty while the other side has a value, Deluxe Sync keeps the existing value instead of erasing it. Review notes use the dedicated mapped column, never Calibre's built-in Comments field, and sync does not change reading progress."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:175
-msgid "Compare Calibre metadata and covers with the server for this book batch. Only linked books participate. Text metadata shown as Calibre → Server can be written to the server; Server → Calibre text metadata remains preview-only. Covers can sync in either direction. Empty preferred values never erase good data, and this preview does not change reading progress."
+#: DeluxeSync/dialogs/sync_preview.py:197
+msgid "Compare Calibre metadata, covers, ratings, and mapped reviews with the server for this book batch. Only linked books participate. Text metadata shown as Calibre → Server can be written to the server; Server → Calibre text metadata remains preview-only. Covers, ratings, and the mapped Summary / Review column can sync in either direction when supported. Empty preferred metadata values never erase good data. Review notes use the dedicated mapped column, never Calibre's built-in Comments field, and sync does not change reading progress."
 msgstr ""
 
 #: DeluxeSync/dialogs/connection.py:517
@@ -488,11 +496,11 @@ msgstr ""
 msgid "Could not create the server book: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:457
+#: DeluxeSync/dialogs/columns.py:466
 msgid "Could not create {lookup}."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:452
+#: DeluxeSync/dialogs/columns.py:461
 msgid "Could not create {lookup}: {error_type}."
 msgstr ""
 
@@ -532,7 +540,7 @@ msgstr ""
 msgid "Could not match selected books."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:731
+#: DeluxeSync/dialogs/sync_preview.py:804
 msgid "Could not read server metadata: {error}"
 msgstr ""
 
@@ -552,23 +560,31 @@ msgstr ""
 msgid "Could not refresh."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:1084
+#: DeluxeSync/dialogs/sync_preview.py:1274
 msgid "Could not sync approved changes: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:1139
+#: DeluxeSync/dialogs/sync_preview.py:1406
 msgid "Could not update the Calibre cover: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:82
+#: DeluxeSync/dialogs/sync_preview.py:1337
+msgid "Could not update the Calibre rating: {error}"
+msgstr ""
+
+#: DeluxeSync/dialogs/sync_preview.py:1377
+msgid "Could not update the Calibre Summary / Review column: {error}"
+msgstr ""
+
+#: DeluxeSync/dialogs/sync_preview.py:83
 msgid "Cover"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:453 DeluxeSync/dialogs/sync_preview.py:454
+#: DeluxeSync/dialogs/sync_preview.py:489 DeluxeSync/dialogs/sync_preview.py:490
 msgid "Cover available"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:163
+#: DeluxeSync/dialogs/columns.py:172
 msgid "Create new Deluxe Sync column ({lookup})"
 msgstr ""
 
@@ -580,7 +596,7 @@ msgstr ""
 msgid "Create on Server is only available for a book with no server match."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:473
+#: DeluxeSync/dialogs/columns.py:482
 msgid "Created {key} and selected it for {label}. Calibre must restart before the new column can be used. When you close Preferences, Deluxe Sync will offer Restart Calibre, Close, or Cancel."
 msgstr ""
 
@@ -596,7 +612,7 @@ msgstr ""
 msgid "Creating “{title}” on the server without reading progress…"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:506
+#: DeluxeSync/dialogs/columns.py:515
 msgid "Creation of {lookup} was canceled."
 msgstr ""
 
@@ -624,7 +640,7 @@ msgstr ""
 msgid "Deluxe Sync is the Calibre companion for sync.techy-notes.com, alongside Deluxe-Sync (KOReader Plugin). It can link Calibre books to server records, pull reading progress and supported annotations or vocabulary into mapped Calibre columns, review metadata differences, and apply server-supported metadata or cover changes while remaining compatible with KOSync servers."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:426
+#: DeluxeSync/dialogs/columns.py:435
 msgid "Deluxe Sync {label}. Created by the Deluxe Sync plugin."
 msgstr ""
 
@@ -644,7 +660,7 @@ msgstr ""
 msgid "Deluxe Sync — Server Library"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:160
+#: DeluxeSync/dialogs/sync_preview.py:182
 msgid "Deluxe Sync — Sync Preview"
 msgstr ""
 
@@ -664,8 +680,8 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:360
-msgid "Disabled because this server does not support metadata or cover writes."
+#: DeluxeSync/dialogs/sync_preview.py:396
+msgid "Disabled because this server does not support metadata, cover, rating, or review writes."
 msgstr ""
 
 #: DeluxeSync/dialogs/connection.py:204
@@ -676,7 +692,7 @@ msgstr ""
 msgid "Disconnected"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:94
+#: DeluxeSync/dialogs/sync_preview.py:97
 msgid "Do not sync"
 msgstr ""
 
@@ -694,6 +710,10 @@ msgstr ""
 
 #: DeluxeSync/dialogs/columns.py:55
 msgid "DS Progress"
+msgstr ""
+
+#: DeluxeSync/dialogs/columns.py:113
+msgid "DS Review"
 msgstr ""
 
 #: DeluxeSync/dialogs/columns.py:64
@@ -720,7 +740,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_books.py:1153 DeluxeSync/dialogs/sync_preview.py:508
+#: DeluxeSync/dialogs/sync_books.py:1153 DeluxeSync/dialogs/sync_preview.py:558
 msgid "Error: {error}"
 msgstr ""
 
@@ -744,7 +764,7 @@ msgstr ""
 msgid "Existing binding"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:75
+#: DeluxeSync/dialogs/sync_preview.py:76
 msgid "Field"
 msgstr ""
 
@@ -772,15 +792,15 @@ msgstr ""
 msgid "Incremental sync state could not be saved; this book will be checked again."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:159 DeluxeSync/dialogs/library.py:47 DeluxeSync/dialogs/match_books.py:84 DeluxeSync/dialogs/sync_preview.py:85
+#: DeluxeSync/dialogs/library.py:159 DeluxeSync/dialogs/library.py:47 DeluxeSync/dialogs/match_books.py:84 DeluxeSync/dialogs/sync_preview.py:88
 msgid "ISBN"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:445
+#: DeluxeSync/dialogs/sync_preview.py:481
 msgid "Keep Calibre value (Server is empty)"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:443
+#: DeluxeSync/dialogs/sync_preview.py:479
 msgid "Keep server value (Calibre is empty)"
 msgstr ""
 
@@ -860,6 +880,10 @@ msgstr ""
 msgid "Map at least one Deluxe Sync custom column before syncing."
 msgstr ""
 
+#: DeluxeSync/dialogs/sync_preview.py:503
+msgid "Map Summary / Review in Column Mappings"
+msgstr ""
+
 #: DeluxeSync/dialogs/dashboard.py:382
 msgid "Match / Create on Server"
 msgstr ""
@@ -910,19 +934,19 @@ msgstr ""
 msgid "No active Calibre library"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:878
+#: DeluxeSync/dialogs/sync_preview.py:977
 msgid "No approved changes are ready to sync."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:446
+#: DeluxeSync/dialogs/sync_preview.py:482
 msgid "No change"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:441
+#: DeluxeSync/dialogs/sync_preview.py:477
 msgid "No change (Do not sync)"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:453 DeluxeSync/dialogs/sync_preview.py:454
+#: DeluxeSync/dialogs/sync_preview.py:489 DeluxeSync/dialogs/sync_preview.py:490
 msgid "No cover"
 msgstr ""
 
@@ -942,7 +966,7 @@ msgstr ""
 msgid "None connected."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_books.py:364 DeluxeSync/dialogs/sync_preview.py:611
+#: DeluxeSync/dialogs/sync_books.py:364 DeluxeSync/dialogs/sync_preview.py:662
 msgid "None of the selected books are linked in Deluxe Sync."
 msgstr ""
 
@@ -982,7 +1006,7 @@ msgstr ""
 msgid "Not connected · authentication required"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_books.py:357 DeluxeSync/dialogs/sync_preview.py:490
+#: DeluxeSync/dialogs/sync_books.py:357 DeluxeSync/dialogs/sync_preview.py:540
 msgid "Not linked"
 msgstr ""
 
@@ -990,7 +1014,7 @@ msgstr ""
 msgid "Not linked:"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:166
+#: DeluxeSync/dialogs/columns.py:175 DeluxeSync/dialogs/sync_preview.py:495
 msgid "Not mapped"
 msgstr ""
 
@@ -1002,7 +1026,7 @@ msgstr ""
 msgid "Not started"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:464 DeluxeSync/dialogs/sync_preview.py:469
+#: DeluxeSync/dialogs/sync_preview.py:508 DeluxeSync/dialogs/sync_preview.py:514 DeluxeSync/dialogs/sync_preview.py:519
 msgid "Not supported by this server"
 msgstr ""
 
@@ -1066,15 +1090,15 @@ msgstr ""
 msgid "Pending removals skipped: {count}"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:471
+#: DeluxeSync/dialogs/sync_preview.py:521
 msgid "Preview only: Server → Calibre"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:762
-msgid "Preview ready. This server does not support metadata or cover writes."
+#: DeluxeSync/dialogs/sync_preview.py:836
+msgid "Preview ready. This server does not support metadata, cover, rating, or review writes."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:528
+#: DeluxeSync/dialogs/sync_preview.py:578
 msgid "Preview: {linked} linked, {unlinked} not linked, {failed} failed."
 msgstr ""
 
@@ -1094,7 +1118,7 @@ msgstr ""
 msgid "Progress: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:78
+#: DeluxeSync/dialogs/sync_preview.py:79
 msgid "Proposed action"
 msgstr ""
 
@@ -1104,6 +1128,10 @@ msgstr ""
 
 #: DeluxeSync/dialogs/sync_books.py:157
 msgid "Pull reading progress, annotation backups, and vocabulary from the server for {scope}. Only linked books participate, only mapped Calibre columns are changed, and this action never sends progress, metadata, annotations, or vocabulary to the server."
+msgstr ""
+
+#: DeluxeSync/dialogs/sync_preview.py:84
+msgid "Rating"
 msgstr ""
 
 #: DeluxeSync/dialogs/library.py:164 DeluxeSync/dialogs/library.py:52 DeluxeSync/dialogs/match_books.py:77 DeluxeSync/dialogs/match_books.py:87
@@ -1128,7 +1156,7 @@ msgid_plural "Reading server data for {count} linked books…"
 msgstr[0] ""
 msgstr[1] ""
 
-#: DeluxeSync/dialogs/sync_preview.py:622
+#: DeluxeSync/dialogs/sync_preview.py:673
 msgid "Reading server metadata for {count} linked book…"
 msgid_plural "Reading server metadata for {count} linked books…"
 msgstr[0] ""
@@ -1138,7 +1166,7 @@ msgstr[1] ""
 msgid "Reading status"
 msgstr ""
 
-#: DeluxeSync/dialogs/dashboard.py:212 DeluxeSync/dialogs/match_books.py:176 DeluxeSync/dialogs/sync_books.py:166 DeluxeSync/dialogs/sync_preview.py:1184 DeluxeSync/dialogs/sync_preview.py:242 DeluxeSync/dialogs/sync_preview.py:759
+#: DeluxeSync/dialogs/dashboard.py:212 DeluxeSync/dialogs/match_books.py:176 DeluxeSync/dialogs/sync_books.py:166 DeluxeSync/dialogs/sync_preview.py:1451 DeluxeSync/dialogs/sync_preview.py:266 DeluxeSync/dialogs/sync_preview.py:833
 msgid "Ready."
 msgstr ""
 
@@ -1170,7 +1198,7 @@ msgstr ""
 msgid "Refresh Matches"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:262
+#: DeluxeSync/dialogs/sync_preview.py:286
 msgid "Refresh Preview"
 msgstr ""
 
@@ -1222,7 +1250,7 @@ msgstr ""
 msgid "Return to the Calibre library used for matching before creating the book."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:810
+#: DeluxeSync/dialogs/sync_preview.py:884
 msgid "Return to the Calibre library used for this Preview before syncing."
 msgstr ""
 
@@ -1246,7 +1274,7 @@ msgstr ""
 msgid "Saved connection · validation pending"
 msgstr ""
 
-#: DeluxeSync/dialogs/dashboard.py:427 DeluxeSync/dialogs/match_books.py:276 DeluxeSync/dialogs/match_books.py:625 DeluxeSync/dialogs/sync_books.py:334 DeluxeSync/dialogs/sync_preview.py:582 DeluxeSync/dialogs/sync_preview.py:801
+#: DeluxeSync/dialogs/dashboard.py:427 DeluxeSync/dialogs/match_books.py:276 DeluxeSync/dialogs/match_books.py:625 DeluxeSync/dialogs/sync_books.py:334 DeluxeSync/dialogs/sync_preview.py:633 DeluxeSync/dialogs/sync_preview.py:875
 msgid "Saved server profile is incomplete."
 msgstr ""
 
@@ -1274,7 +1302,7 @@ msgstr ""
 msgid "Select one or more Calibre books, then choose Refresh Matches."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:564
+#: DeluxeSync/dialogs/sync_preview.py:615
 msgid "Select one or more Calibre books, then choose Sync Preview."
 msgstr ""
 
@@ -1290,15 +1318,15 @@ msgstr ""
 msgid "selected books"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:161 DeluxeSync/dialogs/library.py:49 DeluxeSync/dialogs/sync_preview.py:87
+#: DeluxeSync/dialogs/library.py:161 DeluxeSync/dialogs/library.py:49 DeluxeSync/dialogs/sync_preview.py:90
 msgid "Series"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:88
+#: DeluxeSync/dialogs/sync_preview.py:91
 msgid "Series #"
 msgstr ""
 
-#: DeluxeSync/dialogs/dashboard.py:103 DeluxeSync/dialogs/sync_preview.py:77
+#: DeluxeSync/dialogs/dashboard.py:103 DeluxeSync/dialogs/sync_preview.py:78
 msgid "Server"
 msgstr ""
 
@@ -1306,11 +1334,11 @@ msgstr ""
 msgid "Server authentication failed: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:316 DeluxeSync/dialogs/match_books.py:269 DeluxeSync/dialogs/match_books.py:620 DeluxeSync/dialogs/sync_books.py:320 DeluxeSync/dialogs/sync_preview.py:572 DeluxeSync/dialogs/sync_preview.py:791
+#: DeluxeSync/dialogs/library.py:316 DeluxeSync/dialogs/match_books.py:269 DeluxeSync/dialogs/match_books.py:620 DeluxeSync/dialogs/sync_books.py:320 DeluxeSync/dialogs/sync_preview.py:623 DeluxeSync/dialogs/sync_preview.py:865
 msgid "Server authentication required. Open Configure Deluxe Sync → Server Connection."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_books.py:918 DeluxeSync/dialogs/sync_preview.py:1078 DeluxeSync/dialogs/sync_preview.py:727
+#: DeluxeSync/dialogs/sync_books.py:918 DeluxeSync/dialogs/sync_preview.py:1268 DeluxeSync/dialogs/sync_preview.py:800
 msgid "Server authentication was rejected. Reconnect Deluxe Sync and try again."
 msgstr ""
 
@@ -1338,11 +1366,11 @@ msgstr ""
 msgid "Server connection details"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:863
+#: DeluxeSync/dialogs/sync_preview.py:960
 msgid "Server cover is unavailable."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:152
+#: DeluxeSync/dialogs/columns.py:161
 msgid "Server data → Calibre custom columns"
 msgstr ""
 
@@ -1394,27 +1422,27 @@ msgstr ""
 msgid "Server URL:"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:93
+#: DeluxeSync/dialogs/sync_preview.py:96
 msgid "Server wins"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:724
+#: DeluxeSync/dialogs/sync_preview.py:797
 msgid "Server write support unavailable."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:319
+#: DeluxeSync/dialogs/sync_preview.py:346
 msgid "Server writes supported: None. Metadata and covers are read-only on this server."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:315
+#: DeluxeSync/dialogs/sync_preview.py:342
 msgid "Server writes supported: {fields}."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:194 DeluxeSync/dialogs/sync_preview.py:549
+#: DeluxeSync/dialogs/sync_preview.py:216 DeluxeSync/dialogs/sync_preview.py:600
 msgid "Server writes: Checking…"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:439
+#: DeluxeSync/dialogs/sync_preview.py:475
 msgid "Server → Calibre"
 msgstr ""
 
@@ -1470,7 +1498,7 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: DeluxeSync/dialogs/match_books.py:74 DeluxeSync/dialogs/sync_books.py:83 DeluxeSync/dialogs/sync_preview.py:490 DeluxeSync/dialogs/sync_preview.py:505
+#: DeluxeSync/dialogs/match_books.py:74 DeluxeSync/dialogs/sync_books.py:83 DeluxeSync/dialogs/sync_preview.py:540 DeluxeSync/dialogs/sync_preview.py:555
 msgid "Status"
 msgstr ""
 
@@ -1482,6 +1510,14 @@ msgstr ""
 msgid "Status:"
 msgstr ""
 
+#: DeluxeSync/dialogs/columns.py:110
+msgid "Stores the private KOReader review note in its own column."
+msgstr ""
+
+#: DeluxeSync/dialogs/columns.py:109 DeluxeSync/dialogs/sync_preview.py:85
+msgid "Summary / Review"
+msgstr ""
+
 #: DeluxeSync/dialogs/dashboard.py:169
 msgid "Sync"
 msgstr ""
@@ -1490,11 +1526,11 @@ msgstr ""
 msgid "Sync Again"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:266
+#: DeluxeSync/dialogs/sync_preview.py:290
 msgid "Sync Approved Changes"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_books.py:1247 DeluxeSync/dialogs/sync_preview.py:1200
+#: DeluxeSync/dialogs/sync_books.py:1247 DeluxeSync/dialogs/sync_preview.py:1467
 msgid "Sync Complete"
 msgstr ""
 
@@ -1510,7 +1546,7 @@ msgstr ""
 msgid "Sync complete: {updated} updated, {unchanged} already current, {skipped} not linked, {missing} not on server, {failed} failed."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:1186
+#: DeluxeSync/dialogs/sync_preview.py:1453
 msgid "Sync complete: {updated} updated, {unchanged} no approved changes, {skipped} not linked, {failed} failed."
 msgstr ""
 
@@ -1538,7 +1574,7 @@ msgstr ""
 msgid "Sync {count} linked books? Deluxe Sync will read server state into your mapped Calibre columns. Unlinked books are excluded, and metadata writes still require Review Changes."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:889
+#: DeluxeSync/dialogs/sync_preview.py:988
 msgid "Syncing approved changes for {count} linked book…"
 msgid_plural "Syncing approved changes for {count} linked books…"
 msgstr[0] ""
@@ -1560,11 +1596,11 @@ msgstr ""
 msgid "Testing server connection…"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:1098
+#: DeluxeSync/dialogs/sync_preview.py:1289
 msgid "The active Calibre library changed while changes were being synced. Server writes may have completed; return to the original library and refresh Preview."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:746
+#: DeluxeSync/dialogs/sync_preview.py:820
 msgid "The active Calibre library changed while metadata was being read. The preview was discarded."
 msgstr ""
 
@@ -1576,7 +1612,7 @@ msgstr ""
 msgid "The active server profile changed. Refresh matches before creating the book."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:783
+#: DeluxeSync/dialogs/sync_preview.py:857
 msgid "The active server profile changed. Refresh Preview before syncing."
 msgstr ""
 
@@ -1592,7 +1628,7 @@ msgstr ""
 msgid "The server record already existed. “{title}” is now linked to it; no reading progress was created."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:364
+#: DeluxeSync/dialogs/sync_preview.py:400
 msgid "There are no approved Calibre → Server changes to write."
 msgstr ""
 
@@ -1620,8 +1656,8 @@ msgstr ""
 msgid "This server does not support Calibre document registration."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:776
-msgid "This server does not support the approved metadata or cover changes."
+#: DeluxeSync/dialogs/sync_preview.py:850
+msgid "This server does not support the approved metadata, cover, rating, or review changes."
 msgstr ""
 
 #: DeluxeSync/dialogs/match_books.py:413
@@ -1636,7 +1672,7 @@ msgstr ""
 msgid "This server supports progress sync but does not expose a browseable book list."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:156 DeluxeSync/dialogs/library.py:44 DeluxeSync/dialogs/sync_preview.py:83
+#: DeluxeSync/dialogs/library.py:156 DeluxeSync/dialogs/library.py:44 DeluxeSync/dialogs/sync_preview.py:86
 msgid "Title"
 msgstr ""
 
@@ -1670,6 +1706,10 @@ msgstr ""
 
 #: DeluxeSync/dialogs/library.py:119 DeluxeSync/dialogs/library.py:173 DeluxeSync/dialogs/match_books.py:504 DeluxeSync/dialogs/match_books.py:672 DeluxeSync/dialogs/match_books.py:807 DeluxeSync/dialogs/match_books.py:813
 msgid "Unknown book"
+msgstr ""
+
+#: DeluxeSync/dialogs/sync_preview.py:492 DeluxeSync/dialogs/sync_preview.py:493
+msgid "Unrated"
 msgstr ""
 
 #: DeluxeSync/dialogs/connection.py:519
@@ -1712,15 +1752,15 @@ msgstr ""
 msgid "Vocabulary: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:358
+#: DeluxeSync/dialogs/sync_preview.py:394
 msgid "Wait for the preview to finish loading."
 msgstr ""
 
-#: DeluxeSync/dialogs/sync_preview.py:366
+#: DeluxeSync/dialogs/sync_preview.py:402
 msgid "Write the approved metadata and cover changes to the server."
 msgstr ""
 
-#: DeluxeSync/config.py:179 DeluxeSync/dialogs/columns.py:544
+#: DeluxeSync/config.py:179 DeluxeSync/dialogs/columns.py:553
 msgid "{configured} of {total} mappings configured"
 msgstr ""
 
@@ -1808,19 +1848,19 @@ msgstr[1] ""
 msgid "{count} · local links remain authoritative; review before changing links."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:381 DeluxeSync/dialogs/columns.py:498
+#: DeluxeSync/dialogs/columns.py:390 DeluxeSync/dialogs/columns.py:507
 msgid "{key} already exists and is now selected for {label}."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:395
+#: DeluxeSync/dialogs/columns.py:404
 msgid "{key} already exists but its type ({datatype}) is not compatible with {label}."
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:182
+#: DeluxeSync/dialogs/columns.py:191
 msgid "{key} — missing/incompatible"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:197
+#: DeluxeSync/dialogs/columns.py:206
 msgid "{label}:"
 msgstr ""
 
@@ -1828,10 +1868,14 @@ msgstr ""
 msgid "{name} · UUID {uuid}"
 msgstr ""
 
+#: DeluxeSync/dialogs/sync_preview.py:492 DeluxeSync/dialogs/sync_preview.py:493
+msgid "{rating} / 5"
+msgstr ""
+
 #: DeluxeSync/config.py:168
 msgid "{summary}\nLast known server: {server}"
 msgstr ""
 
-#: DeluxeSync/dialogs/columns.py:136 DeluxeSync/dialogs/connection.py:121
+#: DeluxeSync/dialogs/columns.py:145 DeluxeSync/dialogs/connection.py:121
 msgid "← Back"
 msgstr ""

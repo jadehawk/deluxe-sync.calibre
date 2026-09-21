@@ -56,6 +56,7 @@ from calibre_plugins.deluxe_sync.models import CalibreBook, selected_calibre_boo
 from calibre_plugins.deluxe_sync.settings import (
     get_active_server_profile,
     get_active_server_profile_id,
+    get_column_mappings,
     get_metadata_policies,
     set_metadata_policies,
 )
@@ -80,6 +81,8 @@ _HEADERS = (
 
 _FIELD_LABELS = {
     "cover": _("Cover"),
+    "rating": _("Rating"),
+    "review_note": _("Summary / Review"),
     "title": _("Title"),
     "authors": _("Authors"),
     "isbn": _("ISBN"),
@@ -93,6 +96,18 @@ _POLICY_CHOICES = (
     (_("Server wins"), POLICY_SERVER_WINS),
     (_("Do not sync"), POLICY_DO_NOT_SYNC),
 )
+
+
+def _supports_book_feedback(capabilities_response: dict[str, Any] | None) -> bool:
+    if not isinstance(capabilities_response, dict):
+        return False
+    capabilities = capabilities_response.get("capabilities")
+    capabilities = capabilities if isinstance(capabilities, dict) else {}
+    try:
+        version = int(capabilities.get("book_feedback_version") or 0)
+    except (TypeError, ValueError):
+        version = 0
+    return capabilities.get("book_feedback") is True and version >= 1
 
 
 @dataclass(frozen=True)
@@ -111,6 +126,10 @@ class _SyncResult:
     changed_fields: tuple[str, ...] = ()
     calibre_cover_bytes: bytes | None = None
     cover_hash: str = ""
+    rating_action: str = ""
+    calibre_rating: float | None = None
+    review_action: str = ""
+    calibre_review_note: str | None = None
     error: str = ""
 
 
@@ -118,6 +137,8 @@ class _SyncResult:
 class _SyncPlan:
     preview: _FetchResult
     metadata_patch: dict[str, Any]
+    rating_action: str = ""
+    review_action: str = ""
     cover_action: str = ""
     cover_bytes: bytes | None = None
     cover_hash: str = ""
@@ -149,6 +170,7 @@ class SyncPreviewDialog(QDialog):
         self._capabilities_response: dict[str, Any] | None = None
         self._write_supported = False
         self._cover_sync_supported = False
+        self._feedback_supported = False
         self._results: list[_FetchResult] = []
         self._skipped_books: list[CalibreBook] = []
         self._bridge = _AsyncBridge(self)
@@ -162,22 +184,22 @@ class SyncPreviewDialog(QDialog):
 
         intro = QLabel(
             _(
-                "Compare Calibre metadata and covers with the server for the currently selected linked books. "
+                "Compare Calibre metadata, covers, ratings, and mapped reviews with the server for the currently selected linked books. "
                 "Text metadata shown as Calibre → Server can be written to the server; Server → Calibre "
-                "text metadata remains preview-only. Covers can sync in either direction. If the preferred "
-                "side is empty while the other side has a value, Deluxe Sync keeps the existing value "
-                "instead of erasing it. Sync does not change reading progress."
+                "text metadata remains preview-only. Covers, ratings, and the mapped Summary / Review column can sync in either direction when supported. "
+                "If the preferred metadata side is empty while the other side has a value, Deluxe Sync keeps the "
+                "existing value instead of erasing it. Review notes use the dedicated mapped column, never Calibre's built-in Comments field, and sync does not change reading progress."
             )
         )
         intro.setWordWrap(True)
         if self._explicit_books is not None:
             intro.setText(
                 _(
-                    "Compare Calibre metadata and covers with the server for this book batch. "
+                    "Compare Calibre metadata, covers, ratings, and mapped reviews with the server for this book batch. "
                     "Only linked books participate. Text metadata shown as Calibre → Server can "
                     "be written to the server; Server → Calibre text metadata remains preview-only. "
-                    "Covers can sync in either direction. Empty preferred values never erase good "
-                    "data, and this preview does not change reading progress."
+                    "Covers, ratings, and the mapped Summary / Review column can sync in either direction when supported. Empty preferred metadata "
+                    "values never erase good data. Review notes use the dedicated mapped column, never Calibre's built-in Comments field, and sync does not change reading progress."
                 )
             )
         layout.addWidget(intro)
@@ -208,6 +230,8 @@ class SyncPreviewDialog(QDialog):
             ("asin", 1, 1),
             ("series", 2, 1),
             ("series_index", 0, 2),
+            ("rating", 1, 2),
+            ("review_note", 2, 2),
         )
         label_width = max(
             self.fontMetrics().horizontalAdvance(f"{_FIELD_LABELS[field]}:")
@@ -305,6 +329,9 @@ class SyncPreviewDialog(QDialog):
             )
         if self._cover_sync_supported:
             fields.insert(0, "cover")
+        if self._feedback_supported:
+            insert_at = 1 if fields and fields[0] == "cover" else 0
+            fields[insert_at:insert_at] = ["rating", "review_note"]
         return tuple(fields)
 
     def _update_server_write_support(self) -> None:
@@ -330,6 +357,15 @@ class SyncPreviewDialog(QDialog):
                 continue
             if self._write_supported:
                 count += len(build_metadata_patch(result.book, result.metadata, policies))
+            if self._feedback_supported:
+                for preview in build_metadata_preview(result.book, result.metadata, policies):
+                    if preview.field not in {"rating", "review_note"}:
+                        continue
+                    if preview.action in {
+                        ACTION_CALIBRE_TO_SERVER,
+                        ACTION_SERVER_TO_CALIBRE,
+                    }:
+                        count += 1
             if self._cover_sync_supported:
                 cover_preview = next(
                     (
@@ -350,7 +386,7 @@ class SyncPreviewDialog(QDialog):
 
     def _refresh_sync_availability(self) -> bool:
         approved_count = self._approved_change_count()
-        supports_writes = self._write_supported or self._cover_sync_supported
+        supports_writes = self._write_supported or self._cover_sync_supported or self._feedback_supported
         ready = not self._loading and supports_writes and approved_count > 0
         self.sync_metadata_button.setEnabled(ready)
 
@@ -358,7 +394,7 @@ class SyncPreviewDialog(QDialog):
             tooltip = _("Wait for the preview to finish loading.")
         elif not supports_writes:
             tooltip = _(
-                "Disabled because this server does not support metadata or cover writes."
+                "Disabled because this server does not support metadata, cover, rating, or review writes."
             )
         elif approved_count <= 0:
             tooltip = _("There are no approved Calibre → Server changes to write.")
@@ -452,11 +488,25 @@ class SyncPreviewDialog(QDialog):
         if preview.field == "cover":
             calibre_display = _("Cover available") if preview.calibre_value else _("No cover")
             server_display = _("Cover available") if preview.server_value else _("No cover")
+        elif preview.field == "rating":
+            calibre_display = _("Unrated") if preview.calibre_value is None else _("{rating} / 5").format(rating=preview.calibre_value)
+            server_display = _("Unrated") if preview.server_value is None else _("{rating} / 5").format(rating=preview.server_value)
+        elif preview.field == "review_note":
+            calibre_display = _("Not mapped") if preview.calibre_value is None else self._display_value(preview.calibre_value)
+            server_display = self._display_value(preview.server_value)
         else:
             calibre_display = self._display_value(preview.calibre_value)
             server_display = self._display_value(preview.server_value)
         action_text = self._action_text(preview.action)
-        if preview.field == "cover":
+        if preview.field in {"rating", "review_note"}:
+            if preview.field == "review_note" and preview.calibre_value is None:
+                action_text = _("Map Summary / Review in Column Mappings")
+            elif (
+                preview.action in {ACTION_CALIBRE_TO_SERVER, ACTION_SERVER_TO_CALIBRE}
+                and not self._feedback_supported
+            ):
+                action_text = _("Not supported by this server")
+        elif preview.field == "cover":
             if (
                 preview.action in {ACTION_CALIBRE_TO_SERVER, ACTION_SERVER_TO_CALIBRE}
                 and not self._cover_sync_supported
@@ -543,6 +593,7 @@ class SyncPreviewDialog(QDialog):
         self._capabilities_response = None
         self._write_supported = False
         self._cover_sync_supported = False
+        self._feedback_supported = False
         self._results = []
         self._skipped_books = []
         self.sync_metadata_button.setEnabled(False)
@@ -666,6 +717,23 @@ class SyncPreviewDialog(QDialog):
                         if isinstance(cover, dict)
                         else ""
                     )
+                    metadata["rating_known"] = False
+                    metadata["review_known"] = False
+                    if _supports_book_feedback(capabilities):
+                        feedback_payload = api.get_document_feedback(
+                            document,
+                            profile,
+                            capabilities_response=capabilities,
+                        )
+                        feedback = feedback_payload.get("feedback")
+                        if not isinstance(feedback, dict):
+                            raise ApiError("Server book-feedback response is invalid.")
+                        metadata["rating_known"] = feedback.get("rating_known") is True
+                        if metadata["rating_known"]:
+                            metadata["rating"] = feedback.get("rating")
+                        metadata["review_known"] = feedback.get("review_known") is True
+                        if metadata["review_known"]:
+                            metadata["review_note"] = feedback.get("review_note")
                     results.append(
                         _FetchResult(
                             book=book,
@@ -716,10 +784,15 @@ class SyncPreviewDialog(QDialog):
         self._cover_sync_supported = (
             capability_values.get("document_cover_sync") is True
         )
+        self._feedback_supported = bool(
+            self._capabilities_response
+            and _supports_book_feedback(self._capabilities_response)
+        )
 
         if fatal_error is not None:
             self._write_supported = False
             self._cover_sync_supported = False
+            self._feedback_supported = False
             self.server_write_support_label.setText(
                 _("Server write support unavailable.")
             )
@@ -742,6 +815,7 @@ class SyncPreviewDialog(QDialog):
         if db is None or current_library_uuid != self._library_uuid:
             self._write_supported = False
             self._cover_sync_supported = False
+            self._feedback_supported = False
             self.status_label.setText(
                 _(
                     "The active Calibre library changed while metadata was being read. "
@@ -755,12 +829,12 @@ class SyncPreviewDialog(QDialog):
 
         self._results = list(results)
         self._update_server_write_support()
-        if self._write_supported or self._cover_sync_supported:
+        if self._write_supported or self._cover_sync_supported or self._feedback_supported:
             self.status_label.setText(_("Ready."))
         else:
             self.status_label.setText(
                 _(
-                    "Preview ready. This server does not support metadata or cover writes."
+                    "Preview ready. This server does not support metadata, cover, rating, or review writes."
                 )
             )
         self._render_results()
@@ -770,10 +844,10 @@ class SyncPreviewDialog(QDialog):
             return
 
         if not isinstance(self._capabilities_response, dict) or not (
-            self._write_supported or self._cover_sync_supported
+            self._write_supported or self._cover_sync_supported or self._feedback_supported
         ):
             self.status_label.setText(
-                _("This server does not support the approved metadata or cover changes.")
+                _("This server does not support the approved metadata, cover, rating, or review changes.")
             )
             self._refresh_sync_availability()
             return
@@ -819,25 +893,48 @@ class SyncPreviewDialog(QDialog):
             if result.error or not isinstance(result.metadata, dict):
                 continue
 
+            previews = build_metadata_preview(result.book, result.metadata, policies)
             metadata_patch = (
                 build_metadata_patch(result.book, result.metadata, policies)
                 if self._write_supported
                 else {}
             )
-            cover_preview = next(
-                (
-                    preview
-                    for preview in build_metadata_preview(
-                        result.book, result.metadata, policies
-                    )
-                    if preview.field == "cover"
-                ),
+            rating_preview = next(
+                (preview for preview in previews if preview.field == "rating"),
                 None,
             )
+            review_preview = next(
+                (preview for preview in previews if preview.field == "review_note"),
+                None,
+            )
+            cover_preview = next(
+                (preview for preview in previews if preview.field == "cover"),
+                None,
+            )
+            rating_action = ""
+            review_action = ""
             cover_action = ""
             cover_bytes = None
             cover_hash = ""
             plan_error = ""
+            if (
+                self._feedback_supported
+                and rating_preview is not None
+                and rating_preview.action
+                in {ACTION_CALIBRE_TO_SERVER, ACTION_SERVER_TO_CALIBRE}
+            ):
+                rating_action = rating_preview.action
+                if rating_action == ACTION_SERVER_TO_CALIBRE and calibre_api is None:
+                    plan_error = _("Calibre rating API is unavailable.")
+            if (
+                self._feedback_supported
+                and review_preview is not None
+                and review_preview.action
+                in {ACTION_CALIBRE_TO_SERVER, ACTION_SERVER_TO_CALIBRE}
+            ):
+                review_action = review_preview.action
+                if review_action == ACTION_SERVER_TO_CALIBRE and calibre_api is None:
+                    plan_error = _("Calibre custom-column API is unavailable.")
             if (
                 self._cover_sync_supported
                 and cover_preview is not None
@@ -862,11 +959,13 @@ class SyncPreviewDialog(QDialog):
                     if not cover_hash:
                         plan_error = _("Server cover is unavailable.")
 
-            if metadata_patch or cover_action or plan_error:
+            if metadata_patch or rating_action or review_action or cover_action or plan_error:
                 planned.append(
                     _SyncPlan(
                         preview=result,
                         metadata_patch=metadata_patch,
+                        rating_action=rating_action,
+                        review_action=review_action,
                         cover_action=cover_action,
                         cover_bytes=cover_bytes,
                         cover_hash=cover_hash,
@@ -937,6 +1036,12 @@ class SyncPreviewDialog(QDialog):
                 raise CapabilityError(
                     "This server no longer supports cover synchronization."
                 )
+            if any(plan.rating_action or plan.review_action for plan in planned) and not _supports_book_feedback(
+                capabilities
+            ):
+                raise CapabilityError(
+                    "This server no longer supports book ratings and reviews."
+                )
 
             for plan in planned:
                 preview_result = plan.preview
@@ -954,6 +1059,8 @@ class SyncPreviewDialog(QDialog):
                 try:
                     changed_fields: list[str] = []
                     downloaded_cover = None
+                    calibre_rating = None
+                    calibre_review_note = None
                     if plan.metadata_patch:
                         api.patch_document_metadata(
                             preview_result.document,
@@ -962,6 +1069,60 @@ class SyncPreviewDialog(QDialog):
                             capabilities_response=capabilities,
                         )
                         changed_fields.extend(sorted(plan.metadata_patch))
+
+                    feedback_patch: dict[str, Any] = {}
+                    if plan.rating_action == ACTION_CALIBRE_TO_SERVER:
+                        feedback_patch["rating"] = preview_result.book.rating
+                    if plan.review_action == ACTION_CALIBRE_TO_SERVER:
+                        feedback_patch["review_note"] = (
+                            preview_result.book.review_note
+                            if preview_result.book.review_note
+                            else None
+                        )
+
+                    feedback = None
+                    if feedback_patch:
+                        feedback_payload = api.patch_document_feedback(
+                            preview_result.document,
+                            feedback_patch,
+                            profile,
+                            capabilities_response=capabilities,
+                        )
+                        feedback = feedback_payload.get("feedback")
+                        if not isinstance(feedback, dict):
+                            raise ApiError("Server book-feedback response is invalid.")
+                        if "rating" in feedback_patch:
+                            if feedback.get("rating_known") is not True or feedback.get("rating") != feedback_patch["rating"]:
+                                raise ApiError("Server rating verification failed after update.")
+                            changed_fields.append("rating")
+                        if "review_note" in feedback_patch:
+                            if feedback.get("review_known") is not True or feedback.get("review_note") != feedback_patch["review_note"]:
+                                raise ApiError("Server review verification failed after update.")
+                            changed_fields.append("review_note")
+
+                    if (
+                        plan.rating_action == ACTION_SERVER_TO_CALIBRE
+                        or plan.review_action == ACTION_SERVER_TO_CALIBRE
+                    ):
+                        if feedback is None:
+                            feedback_payload = api.get_document_feedback(
+                                preview_result.document,
+                                profile,
+                                capabilities_response=capabilities,
+                            )
+                            feedback = feedback_payload.get("feedback")
+                        if not isinstance(feedback, dict):
+                            raise ApiError("Server book-feedback response is invalid.")
+                        if plan.rating_action == ACTION_SERVER_TO_CALIBRE:
+                            if feedback.get("rating_known") is not True:
+                                raise ApiError("Server rating is no longer available.")
+                            calibre_rating = feedback.get("rating")
+                            changed_fields.append("rating")
+                        if plan.review_action == ACTION_SERVER_TO_CALIBRE:
+                            if feedback.get("review_known") is not True:
+                                raise ApiError("Server review is no longer available.")
+                            calibre_review_note = feedback.get("review_note")
+                            changed_fields.append("review_note")
 
                     if plan.cover_action == ACTION_CALIBRE_TO_SERVER:
                         uploaded = api.upload_document_cover(
@@ -994,6 +1155,27 @@ class SyncPreviewDialog(QDialog):
                         else ""
                     )
                     metadata["cover"] = server_cover_hash
+                    metadata["rating_known"] = False
+                    metadata["review_known"] = False
+                    if _supports_book_feedback(capabilities):
+                        feedback_payload = api.get_document_feedback(
+                            preview_result.document,
+                            profile,
+                            capabilities_response=capabilities,
+                        )
+                        feedback = feedback_payload.get("feedback")
+                        if not isinstance(feedback, dict):
+                            raise ApiError("Server book-feedback response is invalid.")
+                        metadata["rating_known"] = feedback.get("rating_known") is True
+                        if metadata["rating_known"]:
+                            metadata["rating"] = feedback.get("rating")
+                        else:
+                            metadata.pop("rating", None)
+                        metadata["review_known"] = feedback.get("review_known") is True
+                        if metadata["review_known"]:
+                            metadata["review_note"] = feedback.get("review_note")
+                        else:
+                            metadata.pop("review_note", None)
 
                     mismatches = metadata_patch_mismatches(
                         plan.metadata_patch, metadata
@@ -1015,6 +1197,10 @@ class SyncPreviewDialog(QDialog):
                             changed_fields=tuple(changed_fields),
                             calibre_cover_bytes=downloaded_cover,
                             cover_hash=plan.cover_hash if plan.cover_action else "",
+                            rating_action=plan.rating_action,
+                            calibre_rating=calibre_rating,
+                            review_action=plan.review_action,
+                            calibre_review_note=calibre_review_note,
                         )
                     )
                 except ApiError as error:
@@ -1072,6 +1258,10 @@ class SyncPreviewDialog(QDialog):
         self._cover_sync_supported = (
             capability_values.get("document_cover_sync") is True
         )
+        self._feedback_supported = bool(
+            self._capabilities_response
+            and _supports_book_feedback(self._capabilities_response)
+        )
 
         if fatal_error is not None:
             if isinstance(fatal_error, AuthorizationError):
@@ -1094,6 +1284,7 @@ class SyncPreviewDialog(QDialog):
         if db is None or current_library_uuid != self._library_uuid:
             self._write_supported = False
             self._cover_sync_supported = False
+            self._feedback_supported = False
             self.status_label.setText(
                 _(
                     "The active Calibre library changed while changes were being synced. "
@@ -1111,6 +1302,82 @@ class SyncPreviewDialog(QDialog):
         for synced in sync_results:
             if not isinstance(synced, _SyncResult):
                 continue
+            if synced.rating_action == ACTION_SERVER_TO_CALIBRE and not synced.error:
+                try:
+                    if calibre_api is None:
+                        raise RuntimeError("Calibre rating API is unavailable.")
+                    raw_rating = (
+                        0
+                        if synced.calibre_rating is None
+                        else int(round(float(synced.calibre_rating) * 2))
+                    )
+                    calibre_api.set_field(
+                        "rating",
+                        {synced.book.book_id: raw_rating},
+                    )
+                    stored_rating = calibre_api.field_for(
+                        "rating",
+                        synced.book.book_id,
+                        default_value=0,
+                    )
+                    stored_raw = float(stored_rating or 0)
+                    stored_stars = None if stored_raw == 0 else stored_raw / 2
+                    if stored_stars != synced.calibre_rating:
+                        raise RuntimeError(
+                            "Calibre rating verification failed after update."
+                        )
+                    synced = replace(
+                        synced,
+                        book=replace(synced.book, rating=synced.calibre_rating),
+                    )
+                except Exception as error:
+                    synced = replace(
+                        synced,
+                        changed_fields=(),
+                        error=_("Could not update the Calibre rating: {error}").format(
+                            error=error
+                        ),
+                    )
+            if synced.review_action == ACTION_SERVER_TO_CALIBRE and not synced.error:
+                try:
+                    if calibre_api is None:
+                        raise RuntimeError("Calibre custom-column API is unavailable.")
+                    review_lookup = str(
+                        get_column_mappings().get("review_note") or ""
+                    ).strip()
+                    if not review_lookup:
+                        raise RuntimeError(
+                            "Summary / Review custom column is not mapped."
+                        )
+                    review_value = str(synced.calibre_review_note or "")
+                    calibre_api.set_field(
+                        review_lookup,
+                        {synced.book.book_id: review_value},
+                    )
+                    stored_review = str(
+                        calibre_api.field_for(
+                            review_lookup,
+                            synced.book.book_id,
+                            default_value="",
+                        )
+                        or ""
+                    )
+                    if stored_review != review_value:
+                        raise RuntimeError(
+                            "Calibre Summary / Review verification failed after update."
+                        )
+                    synced = replace(
+                        synced,
+                        book=replace(synced.book, review_note=review_value),
+                    )
+                except Exception as error:
+                    synced = replace(
+                        synced,
+                        changed_fields=(),
+                        error=_(
+                            "Could not update the Calibre Summary / Review column: {error}"
+                        ).format(error=error),
+                    )
             if synced.calibre_cover_bytes and not synced.error:
                 try:
                     if calibre_api is None:

@@ -21,6 +21,8 @@ class CalibreBook:
     identifiers: dict[str, str] = field(default_factory=dict)
     series: str = ""
     series_index: float | None = None
+    rating: float | None = None
+    review_note: str | None = None
     filenames: tuple[str, ...] = ()
     cover_hash: str = ""
 
@@ -119,6 +121,22 @@ def _series_index(value: Any) -> float | None:
         return None
 
 
+def _rating(value: Any) -> float | None:
+    """Convert Calibre's native 0-10 rating units to 0.5-5.0 stars."""
+
+    if value is None or value == "":
+        return None
+    try:
+        raw = float(value)
+    except (TypeError, ValueError):
+        return None
+    if raw == 0:
+        return None
+    if raw < 1 or raw > 10 or raw != int(raw):
+        return None
+    return raw / 2
+
+
 def calibre_book_from_db(
     db: Any,
     library_uuid: str,
@@ -170,6 +188,16 @@ def calibre_book_from_db(
         except (TypeError, ValueError):
             cover_hash = ""
 
+    review_note: str | None = None
+    try:
+        from calibre_plugins.deluxe_sync.settings import get_column_mappings
+
+        review_lookup = str(get_column_mappings().get("review_note") or "").strip()
+        if review_lookup:
+            review_note = str(field_for(review_lookup, "") or "")
+    except Exception:
+        review_note = None
+
     return CalibreBook(
         library_uuid=str(library_uuid or "").strip(),
         book_uuid=book_uuid,
@@ -179,6 +207,8 @@ def calibre_book_from_db(
         identifiers=_clean_identifiers(field_for("identifiers", {})),
         series=str(field_for("series", "") or "").strip(),
         series_index=_series_index(field_for("series_index", None)),
+        rating=_rating(field_for("rating", 0)),
+        review_note=review_note,
         filenames=tuple(filenames),
         cover_hash=cover_hash,
     )

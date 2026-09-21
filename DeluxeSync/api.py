@@ -878,6 +878,75 @@ class DeluxeSyncApi:
             profile=profile,
         )
 
+    @staticmethod
+    def _book_feedback_supported(capabilities_response: dict[str, Any]) -> bool:
+        capabilities = capabilities_response.get("capabilities")
+        capabilities = capabilities if isinstance(capabilities, dict) else {}
+        try:
+            version = int(capabilities.get("book_feedback_version") or 0)
+        except (TypeError, ValueError):
+            version = 0
+        return capabilities.get("book_feedback") is True and version >= 1
+
+    def get_document_feedback(
+        self,
+        document: str,
+        profile: dict[str, Any],
+        *,
+        capabilities_response: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Read first-class rating/review feedback for one raw document."""
+
+        clean_document = str(document or "").strip()
+        if not clean_document:
+            raise ApiError("A server document id is required.")
+        response = capabilities_response or self.discover_capabilities(profile)
+        if not self._book_feedback_supported(response):
+            raise CapabilityError("This server does not support book ratings.")
+        payload = self._request_json(
+            f"/api/v1/documents/{quote(clean_document, safe='')}/feedback",
+            profile=profile,
+        )
+        if not isinstance(payload.get("feedback"), dict):
+            raise ApiError("Server book-feedback response is invalid.")
+        return payload
+
+    def patch_document_feedback(
+        self,
+        document: str,
+        feedback: dict[str, Any],
+        profile: dict[str, Any],
+        *,
+        capabilities_response: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Update rating/review feedback without touching progress or metadata."""
+
+        clean_document = str(document or "").strip()
+        if not clean_document:
+            raise ApiError("A server document id is required.")
+        if not isinstance(feedback, dict) or not feedback:
+            raise ApiError("At least one book-feedback field is required.")
+        allowed_fields = frozenset({"rating", "review_note"})
+        unsupported = sorted(set(feedback) - allowed_fields)
+        if unsupported:
+            raise ApiError(
+                "Unsupported book-feedback field: {field}.".format(field=unsupported[0])
+            )
+        response = capabilities_response or self.discover_capabilities(profile)
+        if not self._book_feedback_supported(response):
+            raise CapabilityError("This server does not support book ratings.")
+        body = dict(feedback)
+        body["source"] = "calibre"
+        payload = self._request_json(
+            f"/api/v1/documents/{quote(clean_document, safe='')}/feedback",
+            method="PATCH",
+            payload=body,
+            profile=profile,
+        )
+        if not isinstance(payload.get("feedback"), dict):
+            raise ApiError("Server book-feedback response is invalid.")
+        return payload
+
     def upload_document_cover(
         self,
         document: str,

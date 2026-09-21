@@ -405,7 +405,7 @@ try:
         "write-disabled server support summary",
     )
     assert_equal(
-        "does not support metadata or cover writes"
+        "does not support metadata, cover, rating, or review writes"
         in dialog.sync_metadata_button.toolTip(),
         True,
         "write-disabled button explanation",

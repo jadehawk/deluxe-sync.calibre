@@ -14,9 +14,9 @@ if plugin is None:
     raise RuntimeError("Deluxe Sync is not installed")
 if str(getattr(plugin, "author", "")) != "Jadehawk":
     raise RuntimeError(f"Installed Deluxe Sync author is unexpected: {plugin.author!r}")
-if tuple(plugin.version) != (0, 1, 0, 0):
+if tuple(plugin.version) != (0, 1, 0, 1):
     raise RuntimeError(f"Installed Deluxe Sync version tuple is unexpected: {plugin.version!r}")
-if str(getattr(plugin, "version_string", "")) != "0.1.0.0":
+if str(getattr(plugin, "version_string", "")) != "0.1.0.1":
     raise RuntimeError(
         f"Installed Deluxe Sync version string is unexpected: {getattr(plugin, 'version_string', None)!r}"
     )
@@ -127,7 +127,7 @@ if columns_page is None:
     raise RuntimeError("Column Mappings page was not created on first navigation")
 if config_widget.stack.currentWidget() is not columns_page:
     raise RuntimeError("Column Mappings navigation did not select its page")
-expected_mappings = {"progress", "status", "last_location", "last_sync", "annotations", "vocabulary"}
+expected_mappings = {"progress", "status", "last_location", "last_sync", "annotations", "vocabulary", "review_note"}
 if set(columns_page.combos) != expected_mappings:
     raise RuntimeError("Column Mappings page does not expose the expected mappings")
 if host_dialog.width() < 680 or host_dialog.height() < 440:

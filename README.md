@@ -4,7 +4,7 @@ Deluxe Sync brings your KOReader/KOSync reading data into Calibre and helps keep
 
 It is the Calibre companion to the **Deluxe-Sync KOReader plugin** and works especially well with the free enhanced Techy-Notes sync server at [https://sync.techy-notes.com](https://sync.techy-notes.com). Standard KOSync servers are also supported where their available features allow it.
 
-**Current plugin version: 0.1.0.0**
+**Current plugin version: 0.1.0.1**
 
 **Project home:** [jadehawk/deluxe-sync.calibre](https://github.com/jadehawk/deluxe-sync.calibre)
 
@@ -18,6 +18,7 @@ It is the Calibre companion to the **Deluxe-Sync KOReader plugin** and works esp
 - Show your server library and linked book versions from inside Calibre.
 - Review metadata differences before anything is changed.
 - Send selected Calibre metadata such as title, author, series, ISBN, ASIN, and cover information to a compatible enhanced server.
+- Sync Calibre's native Rating field with supported enhanced servers, including half-star ratings.
 - Keep Calibre-to-server book mappings backed up on supported enhanced servers so they can be recovered later.
 
 Deluxe Sync adapts to the server you connect to. Enhanced Techy-Notes servers expose the full feature set; ordinary KOSync servers continue to work with the features they actually provide.
@@ -66,6 +67,7 @@ You can map existing Calibre custom columns or let Deluxe Sync create the recomm
 - **Last Sync** — the server timestamp for the reading state.
 - **Annotations & Highlights** — highlights, notes, and bookmarks in an HTML column.
 - **Vocabulary** — Vocabulary Builder words in an HTML column.
+- **Summary / Review** — your private KOReader completion note in a dedicated comments-style column (recommended: `#ds_review`).
 
 When Deluxe Sync creates a new Calibre custom column, Calibre must restart before that column becomes available. The plugin offers a **Restart Calibre** button when this is needed.
 
@@ -110,10 +112,12 @@ For linked books, **Review Changes** compares Calibre and server metadata such a
 - Series
 - Series number
 - Cover availability
+- Rating
+- Summary / Review
 
-You can choose which side should win for each field. Compatible enhanced servers can accept approved **Calibre → server** metadata updates.
+You can choose which side should win for each field. Compatible enhanced servers can accept approved **Calibre → server** metadata updates. Rating uses Calibre's native 0–10 field internally, so half-star values round-trip exactly as 0.5–5.0 stars when the server supports book feedback.
 
-Metadata changes are never used as a hidden way to update reading progress.
+Summary / Review uses the dedicated custom column you map in **Column Mappings** and can sync in either direction on servers that support book feedback. It never uses or overwrites Calibre's built-in Comments field. Metadata changes are never used as a hidden way to update reading progress.
 
 ## Server compatibility
 

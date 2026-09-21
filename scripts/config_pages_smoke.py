@@ -169,6 +169,10 @@ class FakeDb:
                 "name": "Smoke Vocabulary",
                 "datatype": "comments",
             },
+            "#smoke_review": {
+                "name": "Smoke Review",
+                "datatype": "comments",
+            },
             "#smoke_count": {
                 "name": "Smoke Count",
                 "datatype": "int",
@@ -358,6 +362,7 @@ try:
         "last_sync": "#smoke_sync",
         "annotations": "#smoke_annotations",
         "vocabulary": "#smoke_vocabulary",
+        "review_note": "#smoke_review",
     }
     for mapping_key, column_key in expected.items():
         combo = columns.combos[mapping_key]

@@ -308,6 +308,7 @@ try:
         "asin": (1, 3),
         "series": (2, 3),
         "series_index": (0, 5),
+        "rating": (1, 5),
     }
     for field, expected_position in expected_policy_positions.items():
         combo = dialog._policy_boxes[field]
@@ -322,7 +323,7 @@ try:
         for row, column in (
             (0, 0), (1, 0), (2, 0),
             (0, 2), (1, 2), (2, 2),
-            (0, 4),
+            (0, 4), (1, 4),
         )
     }
     assert_equal(len(policy_label_widths), 1, "aligned policy label widths")
@@ -337,7 +338,7 @@ try:
     )
     assert_equal(FakePreviewApi.mutation_calls, [], "server mutation calls")
     assert_equal(dialog.results_model.columnCount(), 4, "grouped preview columns")
-    assert_equal(dialog.results_model.rowCount(), 10, "grouped preview result rows")
+    assert_equal(dialog.results_model.rowCount(), 12, "grouped preview result rows")
 
     rows = [
         [
