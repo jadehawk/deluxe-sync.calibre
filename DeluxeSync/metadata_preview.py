@@ -91,7 +91,7 @@ def calibre_metadata(book: CalibreBook) -> dict[str, Any]:
         "isbn": book.isbn,
         "asin": book.asin,
         "series": book.series,
-        "series_index": book.series_index,
+        "series_index": book.series_index if str(book.series or "").strip() else None,
     }
 
 

@@ -86,6 +86,27 @@ manual_finished = snapshot_from_progress(
 )
 assert_equal(manual_finished.status, "Finished", "manual completion status")
 
+cover_only = snapshot_from_progress(
+    {
+        "percentage": 0.005,
+        "progress": "/cover",
+        "timestamp": 1_700_000_102,
+    }
+)
+assert_equal(cover_only.progress, 0.5, "cover-only progress")
+assert_equal(cover_only.status, "Not started", "cover-only status")
+assert_equal(cover_only.last_location, "/cover", "cover-only location")
+
+active_reading = snapshot_from_progress(
+    {
+        "percentage": 0.01,
+        "progress": "/chapter/one",
+        "timestamp": 1_700_000_103,
+    }
+)
+assert_equal(active_reading.progress, 1.0, "active-reading threshold progress")
+assert_equal(active_reading.status, "Reading", "active-reading threshold status")
+
 not_started = snapshot_from_progress(None)
 assert_equal(not_started.progress, 0.0, "not-started progress")
 assert_equal(not_started.status, "Not started", "not-started status")

@@ -122,6 +122,26 @@ empty_patch = build_metadata_patch(
 if "series" in empty_patch or "series_index" in empty_patch:
     raise RuntimeError("Empty Calibre metadata would erase a non-empty server value")
 
+orphan_index_patch = build_metadata_patch(
+    CalibreBook(
+        library_uuid="stage6-library",
+        book_uuid="orphan-index",
+        book_id=3,
+        title="Same Title",
+        authors=("Alice Example",),
+        series="",
+        series_index=1,
+    ),
+    {
+        "title": "Same Title",
+        "authors": "Alice Example",
+        "series": "",
+        "series_index": 1,
+    },
+    default_policies,
+)
+assert_equal(orphan_index_patch, {"series_index": None}, "orphan series index cleanup")
+
 verified_metadata = dict(server_metadata)
 verified_metadata.update(patch)
 assert_equal(

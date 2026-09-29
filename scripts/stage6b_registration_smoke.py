@@ -100,6 +100,17 @@ empty_book = CalibreBook(
 if registration_metadata(empty_book) != {"title": "Only Title"}:
     raise RuntimeError("Empty registration metadata fields were not omitted")
 
+orphan_index_book = CalibreBook(
+    library_uuid="stage6b-library",
+    book_uuid="orphan-index",
+    book_id=44,
+    title="No Series",
+    series="",
+    series_index=1,
+)
+if registration_metadata(orphan_index_book) != {"title": "No Series"}:
+    raise RuntimeError("Series index must not be registered without a series name")
+
 
 # ---------------------------------------------------------------------------
 # API contract: capability-gated POST with an exact metadata-only payload.

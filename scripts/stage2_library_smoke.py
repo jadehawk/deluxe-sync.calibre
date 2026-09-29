@@ -247,12 +247,16 @@ try:
 
     assert _percentage_text({"percentage": 1}) == "100%"
     assert _series_text({"series": "Series", "series_index": 3}) == "Series · #3"
+    assert _reading_state_text({"percentage": 0.005}) == "Not started"
+    assert _reading_state_text({"percentage": 0.01}) == "Reading"
+    assert _reading_state_text({"percentage": 0.999}) == "Reading"
     assert _reading_state_text(
         {
-            "percentage": 1,
+            "percentage": 0.75,
             "reading_state": {"manual_completion": True},
         }
     ) == "Finished (manual)"
+    assert _reading_state_text({"percentage": 1}) == "Finished"
 
     original_get_active_server_profile = library_module.get_active_server_profile
     try:

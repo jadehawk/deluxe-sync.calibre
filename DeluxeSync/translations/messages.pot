@@ -56,11 +56,11 @@ msgstr ""
 msgid "<b>Server Connection</b>"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:229
+#: DeluxeSync/dialogs/library.py:232
 msgid "<b>Server Library</b>"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:143
+#: DeluxeSync/dialogs/library.py:146
 msgid "<b>{title}</b><br>{versions}"
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Annotations: {state}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:160 DeluxeSync/dialogs/library.py:48 DeluxeSync/dialogs/match_books.py:85 DeluxeSync/dialogs/sync_preview.py:89
+#: DeluxeSync/dialogs/library.py:163 DeluxeSync/dialogs/library.py:49 DeluxeSync/dialogs/match_books.py:85 DeluxeSync/dialogs/sync_preview.py:89
 msgid "ASIN"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgstr ""
 msgid "Authentication: {auth}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:157 DeluxeSync/dialogs/library.py:45 DeluxeSync/dialogs/match_books.py:73 DeluxeSync/dialogs/match_books.py:83
+#: DeluxeSync/dialogs/library.py:160 DeluxeSync/dialogs/library.py:46 DeluxeSync/dialogs/match_books.py:73 DeluxeSync/dialogs/match_books.py:83
 msgid "Author(s)"
 msgstr ""
 
@@ -384,7 +384,7 @@ msgstr ""
 msgid "Client ID: {client_id}"
 msgstr ""
 
-#: DeluxeSync/config.py:355 DeluxeSync/dialogs/about.py:64 DeluxeSync/dialogs/dashboard.py:222 DeluxeSync/dialogs/library.py:194 DeluxeSync/dialogs/library.py:288 DeluxeSync/dialogs/match_books.py:231 DeluxeSync/dialogs/sync_books.py:197 DeluxeSync/dialogs/sync_preview.py:302
+#: DeluxeSync/config.py:355 DeluxeSync/dialogs/about.py:64 DeluxeSync/dialogs/dashboard.py:222 DeluxeSync/dialogs/library.py:197 DeluxeSync/dialogs/library.py:291 DeluxeSync/dialogs/match_books.py:231 DeluxeSync/dialogs/sync_books.py:197 DeluxeSync/dialogs/sync_preview.py:302
 msgid "Close"
 msgstr ""
 
@@ -420,7 +420,7 @@ msgstr ""
 msgid "Configure Columns"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:256
+#: DeluxeSync/dialogs/library.py:259
 msgid "Configure Deluxe Sync"
 msgstr ""
 
@@ -504,15 +504,15 @@ msgstr ""
 msgid "Could not create {lookup}: {error_type}."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:577
+#: DeluxeSync/dialogs/library.py:580
 msgid "Could not load linked versions."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:588
+#: DeluxeSync/dialogs/library.py:591
 msgid "Could not load linked versions: invalid response."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:569
+#: DeluxeSync/dialogs/library.py:572
 msgid "Could not load linked versions: {error}"
 msgstr ""
 
@@ -520,15 +520,15 @@ msgstr ""
 msgid "Could not load server library: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:414
+#: DeluxeSync/dialogs/library.py:417
 msgid "Could not load the server library."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:424
+#: DeluxeSync/dialogs/library.py:427
 msgid "Could not load the server library: invalid response."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:407
+#: DeluxeSync/dialogs/library.py:410
 msgid "Could not load the server library: {error}"
 msgstr ""
 
@@ -648,7 +648,7 @@ msgstr ""
 msgid "Deluxe Sync — Dashboard"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:137
+#: DeluxeSync/dialogs/library.py:140
 msgid "Deluxe Sync — Linked Versions"
 msgstr ""
 
@@ -656,7 +656,7 @@ msgstr ""
 msgid "Deluxe Sync — Match Selected Books"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:226
+#: DeluxeSync/dialogs/library.py:229
 msgid "Deluxe Sync — Server Library"
 msgstr ""
 
@@ -768,11 +768,11 @@ msgstr ""
 msgid "Field"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:158 DeluxeSync/dialogs/match_books.py:86
+#: DeluxeSync/dialogs/library.py:161 DeluxeSync/dialogs/match_books.py:86
 msgid "Filename"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:46
+#: DeluxeSync/dialogs/library.py:47
 msgid "Filename / Versions"
 msgstr ""
 
@@ -780,11 +780,11 @@ msgstr ""
 msgid "Filename hint — review required"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:101 DeluxeSync/dialogs/sync_books.py:1252
+#: DeluxeSync/dialogs/library.py:104 DeluxeSync/dialogs/sync_books.py:1252
 msgid "Finished"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:101
+#: DeluxeSync/dialogs/library.py:102
 msgid "Finished (manual)"
 msgstr ""
 
@@ -792,7 +792,7 @@ msgstr ""
 msgid "Incremental sync state could not be saved; this book will be checked again."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:159 DeluxeSync/dialogs/library.py:47 DeluxeSync/dialogs/match_books.py:84 DeluxeSync/dialogs/sync_preview.py:88
+#: DeluxeSync/dialogs/library.py:162 DeluxeSync/dialogs/library.py:48 DeluxeSync/dialogs/match_books.py:84 DeluxeSync/dialogs/sync_preview.py:88
 msgid "ISBN"
 msgstr ""
 
@@ -840,7 +840,7 @@ msgstr ""
 msgid "Linked"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:140
+#: DeluxeSync/dialogs/library.py:143
 msgid "Linked book"
 msgstr ""
 
@@ -848,7 +848,7 @@ msgstr ""
 msgid "Linked book {logical_id} details were unavailable ({error})."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:251
+#: DeluxeSync/dialogs/library.py:254
 msgid "Linked Versions…"
 msgstr ""
 
@@ -860,15 +860,15 @@ msgstr ""
 msgid "Loading after authentication…"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:524
+#: DeluxeSync/dialogs/library.py:527
 msgid "Loading linked versions…"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:341
+#: DeluxeSync/dialogs/library.py:344
 msgid "Loading server library…"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:53 DeluxeSync/dialogs/match_books.py:78 DeluxeSync/dialogs/match_books.py:88
+#: DeluxeSync/dialogs/library.py:54 DeluxeSync/dialogs/match_books.py:78 DeluxeSync/dialogs/match_books.py:88
 msgid "Logical book"
 msgstr ""
 
@@ -1022,7 +1022,7 @@ msgstr ""
 msgid "Not on server — skipped"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:103 DeluxeSync/dialogs/sync_books.py:1255
+#: DeluxeSync/dialogs/library.py:106 DeluxeSync/dialogs/sync_books.py:1255
 msgid "Not started"
 msgstr ""
 
@@ -1042,7 +1042,7 @@ msgstr ""
 msgid "Only the books currently selected in Calibre are inspected. Matching does not change Calibre book metadata or reading progress. Safe book creation is offered only when the connected server explicitly supports document registration without inventing reading progress. Approved bindings may be backed up to compatible Techy-Notes servers for recovery."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:309
+#: DeluxeSync/dialogs/library.py:312
 msgid "Open a Calibre library before browsing Deluxe Sync."
 msgstr ""
 
@@ -1102,7 +1102,7 @@ msgstr ""
 msgid "Preview: {linked} linked, {unlinked} not linked, {failed} failed."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:162 DeluxeSync/dialogs/library.py:50 DeluxeSync/dialogs/sync_books.py:82
+#: DeluxeSync/dialogs/library.py:165 DeluxeSync/dialogs/library.py:51 DeluxeSync/dialogs/sync_books.py:82
 msgid "Progress"
 msgstr ""
 
@@ -1134,15 +1134,15 @@ msgstr ""
 msgid "Rating"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:164 DeluxeSync/dialogs/library.py:52 DeluxeSync/dialogs/match_books.py:77 DeluxeSync/dialogs/match_books.py:87
+#: DeluxeSync/dialogs/library.py:167 DeluxeSync/dialogs/library.py:53 DeluxeSync/dialogs/match_books.py:77 DeluxeSync/dialogs/match_books.py:87
 msgid "Raw document"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:233
+#: DeluxeSync/dialogs/library.py:236
 msgid "Read-only view of books stored on the Deluxe Sync server. Linked book versions are shown as one logical book so they are not duplicated."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:104 DeluxeSync/dialogs/sync_books.py:1254
+#: DeluxeSync/dialogs/library.py:107 DeluxeSync/dialogs/sync_books.py:1254
 msgid "Reading"
 msgstr ""
 
@@ -1190,7 +1190,7 @@ msgstr ""
 msgid "Recover Server Bindings…"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:247
+#: DeluxeSync/dialogs/library.py:250
 msgid "Refresh"
 msgstr ""
 
@@ -1278,7 +1278,7 @@ msgstr ""
 msgid "Saved server profile is incomplete."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:323
+#: DeluxeSync/dialogs/library.py:326
 msgid "Saved server profile is incomplete. Connect to the server again."
 msgstr ""
 
@@ -1294,7 +1294,7 @@ msgstr ""
 msgid "Scope: {scope}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:242
+#: DeluxeSync/dialogs/library.py:245
 msgid "Search title, author, identifier, series, or document id…"
 msgstr ""
 
@@ -1318,7 +1318,7 @@ msgstr ""
 msgid "selected books"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:161 DeluxeSync/dialogs/library.py:49 DeluxeSync/dialogs/sync_preview.py:90
+#: DeluxeSync/dialogs/library.py:164 DeluxeSync/dialogs/library.py:50 DeluxeSync/dialogs/sync_preview.py:90
 msgid "Series"
 msgstr ""
 
@@ -1334,7 +1334,7 @@ msgstr ""
 msgid "Server authentication failed: {error}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:316 DeluxeSync/dialogs/match_books.py:269 DeluxeSync/dialogs/match_books.py:620 DeluxeSync/dialogs/sync_books.py:320 DeluxeSync/dialogs/sync_preview.py:623 DeluxeSync/dialogs/sync_preview.py:865
+#: DeluxeSync/dialogs/library.py:319 DeluxeSync/dialogs/match_books.py:269 DeluxeSync/dialogs/match_books.py:620 DeluxeSync/dialogs/sync_books.py:320 DeluxeSync/dialogs/sync_preview.py:623 DeluxeSync/dialogs/sync_preview.py:865
 msgid "Server authentication required. Open Configure Deluxe Sync → Server Connection."
 msgstr ""
 
@@ -1494,7 +1494,7 @@ msgstr ""
 msgid "Standard KOSync progress: {state}"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:163 DeluxeSync/dialogs/library.py:51
+#: DeluxeSync/dialogs/library.py:166 DeluxeSync/dialogs/library.py:52
 msgid "State"
 msgstr ""
 
@@ -1640,7 +1640,7 @@ msgstr ""
 msgid "this batch"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:504
+#: DeluxeSync/dialogs/library.py:507
 msgid "This linked book has an invalid server id."
 msgstr ""
 
@@ -1672,7 +1672,7 @@ msgstr ""
 msgid "This server supports progress sync but does not expose a browseable book list."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:156 DeluxeSync/dialogs/library.py:44 DeluxeSync/dialogs/sync_preview.py:86
+#: DeluxeSync/dialogs/library.py:159 DeluxeSync/dialogs/library.py:45 DeluxeSync/dialogs/sync_preview.py:86
 msgid "Title"
 msgstr ""
 
@@ -1704,7 +1704,7 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:119 DeluxeSync/dialogs/library.py:173 DeluxeSync/dialogs/match_books.py:504 DeluxeSync/dialogs/match_books.py:672 DeluxeSync/dialogs/match_books.py:807 DeluxeSync/dialogs/match_books.py:813
+#: DeluxeSync/dialogs/library.py:122 DeluxeSync/dialogs/library.py:176 DeluxeSync/dialogs/match_books.py:504 DeluxeSync/dialogs/match_books.py:672 DeluxeSync/dialogs/match_books.py:807 DeluxeSync/dialogs/match_books.py:813
 msgid "Unknown book"
 msgstr ""
 
@@ -1786,7 +1786,7 @@ msgid_plural "{count} linked"
 msgstr[0] ""
 msgstr[1] ""
 
-#: DeluxeSync/dialogs/library.py:461
+#: DeluxeSync/dialogs/library.py:464
 msgid "{count} linked book"
 msgid_plural "{count} linked books"
 msgstr[0] ""
@@ -1796,13 +1796,13 @@ msgstr[1] ""
 msgid "{count} linked books are in scope. Unlinked Calibre books are never included in this batch."
 msgstr ""
 
-#: DeluxeSync/dialogs/library.py:462
+#: DeluxeSync/dialogs/library.py:465
 msgid "{count} linked raw record"
 msgid_plural "{count} linked raw records"
 msgstr[0] ""
 msgstr[1] ""
 
-#: DeluxeSync/dialogs/library.py:111 DeluxeSync/dialogs/library.py:145
+#: DeluxeSync/dialogs/library.py:114 DeluxeSync/dialogs/library.py:148
 msgid "{count} linked version"
 msgid_plural "{count} linked versions"
 msgstr[0] ""
@@ -1820,7 +1820,7 @@ msgid_plural "{count} no matches"
 msgstr[0] ""
 msgstr[1] ""
 
-#: DeluxeSync/dialogs/library.py:460
+#: DeluxeSync/dialogs/library.py:463
 msgid "{count} raw record"
 msgid_plural "{count} raw records"
 msgstr[0] ""
@@ -1832,7 +1832,7 @@ msgid_plural "{count} selected books"
 msgstr[0] ""
 msgstr[1] ""
 
-#: DeluxeSync/dialogs/library.py:459
+#: DeluxeSync/dialogs/library.py:462
 msgid "{count} visible book"
 msgid_plural "{count} visible books"
 msgstr[0] ""

@@ -50,7 +50,8 @@ def registration_metadata(book: CalibreBook) -> dict[str, object]:
             metadata[field] = clean
 
     if (
-        book.series_index is not None
+        str(book.series or "").strip()
+        and book.series_index is not None
         and not isinstance(book.series_index, bool)
         and isfinite(float(book.series_index))
     ):

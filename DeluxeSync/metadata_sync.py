@@ -6,6 +6,7 @@ from typing import Any, Mapping
 
 from calibre_plugins.deluxe_sync.metadata_preview import (
     ACTION_CALIBRE_TO_SERVER,
+    POLICY_DO_NOT_SYNC,
     build_metadata_preview,
     normalize_metadata_value,
 )
@@ -19,11 +20,24 @@ def build_metadata_patch(
 ) -> dict[str, Any]:
     """Return only fields explicitly approved for Calibre-to-server writes."""
 
-    return {
+    patch = {
         preview.field: preview.calibre_value
         for preview in build_metadata_preview(book, server_metadata, policies)
         if preview.action == ACTION_CALIBRE_TO_SERVER and preview.field not in {"cover", "rating", "review_note"}
     }
+    remote = server_metadata if isinstance(server_metadata, Mapping) else {}
+    local_series = normalize_metadata_value("series", book.series)
+    remote_series = normalize_metadata_value("series", remote.get("series"))
+    remote_index = normalize_metadata_value("series_index", remote.get("series_index"))
+    series_index_policy = str((policies or {}).get("series_index") or "").strip()
+    if (
+        not local_series
+        and not remote_series
+        and remote_index is not None
+        and series_index_policy != POLICY_DO_NOT_SYNC
+    ):
+        patch["series_index"] = None
+    return patch
 
 
 def metadata_patch_mismatches(

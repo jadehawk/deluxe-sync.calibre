@@ -1,10 +1,12 @@
 # Changelog
 
-## [0.1.0.1] - 2026-09-21
+## [0.1.0.1] - 2026-09-29
 
 - Added bidirectional native Calibre Rating synchronization with half-star precision through the enhanced server book-feedback API.
 - Added a dedicated **Summary / Review** custom-column mapping (`#ds_review` / **DS Review**) for private KOReader review notes without using Calibre's built-in Comments field.
 - Added explicit rating/review clear handling, Review Changes policies, and regression coverage for feedback privacy and metadata separation.
+- Aligned Calibre reading-state labels with the enhanced server's 1% active-reading rule: sub-1% cover/front-matter browsing remains **Not started** while exact progress, location, and last-sync data are preserved; 1% starts **Reading**, and manual completion or 100% remains **Finished**.
+- Prevented orphan series numbers when Calibre has no series name, and repaired an existing server-side series index when both Calibre and the server have no series name.
 
 ## [0.1.0.0] - 2026-09-20
 

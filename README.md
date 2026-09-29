@@ -99,6 +99,8 @@ The completion message tells you how many books were updated, already current, s
 
 Reading progress, annotations, and vocabulary are **server → Calibre**.
 
+For reading status, Deluxe Sync follows the enhanced server's active-reading threshold: progress below **1%** remains **Not started** while the exact percentage, location, and last-sync time are still preserved. At **1%** the status becomes **Reading**; explicit manual completion or 100% progress is **Finished**.
+
 Deluxe Sync does **not** push Calibre reading progress back to your KOSync server. Your e-reader or KOReader client remains the normal source of reading-position updates.
 
 ## Metadata review
@@ -118,6 +120,8 @@ For linked books, **Review Changes** compares Calibre and server metadata such a
 You can choose which side should win for each field. Compatible enhanced servers can accept approved **Calibre → server** metadata updates. Rating uses Calibre's native 0–10 field internally, so half-star values round-trip exactly as 0.5–5.0 stars when the server supports book feedback.
 
 Summary / Review uses the dedicated custom column you map in **Column Mappings** and can sync in either direction on servers that support book feedback. It never uses or overwrites Calibre's built-in Comments field. Metadata changes are never used as a hidden way to update reading progress.
+
+When creating or updating a server book, Deluxe Sync sends a series number only when Calibre also has a non-empty series name. If both Calibre and the server have no series name, an orphan server-side series number is cleared instead of being preserved as misleading metadata.
 
 ## Server compatibility
 

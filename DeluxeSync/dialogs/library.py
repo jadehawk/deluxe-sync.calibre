@@ -25,6 +25,7 @@ from qt.core import (
 
 from calibre_plugins.deluxe_sync.api import ApiError, AuthorizationError, DeluxeSyncApi
 from calibre_plugins.deluxe_sync.logger import get_logger
+from calibre_plugins.deluxe_sync.progress_sync import MIN_ACTIVE_READING_PERCENT
 from calibre_plugins.deluxe_sync.settings import get_active_server_profile
 
 
@@ -97,9 +98,11 @@ def _reading_state_text(book: dict[str, Any]) -> str:
     value = _percentage_value(book)
     reading_state = book.get("reading_state")
     manual = isinstance(reading_state, dict) and reading_state.get("manual_completion") is True
-    if value >= 99.5:
-        return _("Finished (manual)") if manual else _("Finished")
-    if value <= 0:
+    if manual:
+        return _("Finished (manual)")
+    if value >= 100.0:
+        return _("Finished")
+    if value < MIN_ACTIVE_READING_PERCENT:
         return _("Not started")
     return _("Reading")
 

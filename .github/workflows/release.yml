@@ -111,5 +111,5 @@ jobs:
           tag="${{ steps.version.outputs.tag }}"
           archive="dist/Deluxe_Sync_v${version}.zip"
           gh release create "$tag" "$archive" \
-            --title "Deluxe Sync for Calibre v${version}" \
+            --title "$tag" \
             --notes-file release-notes.md

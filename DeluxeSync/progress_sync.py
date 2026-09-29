@@ -9,6 +9,7 @@ from typing import Any
 
 
 MAPPING_KEYS = ("progress", "status", "last_location", "last_sync")
+MIN_ACTIVE_READING_PERCENT = 1.0
 
 
 @dataclass(frozen=True)
@@ -76,7 +77,7 @@ def snapshot_from_progress(payload: dict[str, Any] | None) -> ProgressSnapshot:
     )
     if manual_completion or progress >= 100.0:
         status = "Finished"
-    elif progress <= 0:
+    elif progress < MIN_ACTIVE_READING_PERCENT:
         status = "Not started"
     else:
         status = "Reading"
